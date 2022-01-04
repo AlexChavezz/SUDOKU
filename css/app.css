@@ -1,0 +1,32 @@
+* {
+    padding:0px;
+    margin:0px;
+    box-sizing: border-box;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#root {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 80%;
+    justify-content: center;
+    align-items: center;
+}
+#root article {
+    height: 80%;
+    display: grid;
+    align-items:center;
+}
+#root article h1 {
+    text-align: center;
+    font-size:40px;
+}
+#root article .initial_screen_container_options {
+    display: flex;
+    justify-content: space-around;
+}
+.initial_screen_option {
+    height: 100px;
+    width: 200px;
+}
