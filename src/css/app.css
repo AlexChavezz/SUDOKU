@@ -1,0 +1,87 @@
+* {
+    padding:0px;
+    margin:0px;
+    box-sizing: border-box;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#root {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 80%;
+    justify-content: center;
+    align-items: center;
+}
+#root article {
+    height: 80%;
+    display: grid;
+    align-items:center;
+}
+#root article h1 {
+    text-align: center;
+    font-size:40px;
+}
+#root article .initial_screen_container_options {
+    display: flex;
+    justify-content: space-around;
+}
+.initial_screen_option {
+    height: 100px;
+    width: 200px;
+}
+.sudoku {
+    /* border: 1px solid black; */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr) ;
+    width: 600px;
+    height: 600px !important;
+    margin: 0px auto;
+}
+.sudoku .sudoku_container_number {
+    border: 1px solid #181818;
+    width: 200px;
+    height: 200px;
+    display: grid;
+    grid-template-columns:repeat(3, 1fr) ;
+}
+.sudoku .sudoku_container_number .sudoku_number {
+    border: .5px solid #ccc;
+    width: calc(200px / 3);
+    height: calc(200px / 3);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.sudoku .sudoku_container_number .static {
+    font-weight: bold;
+}
+/*
+
+    -> aside styles
+
+*/
+
+#root aside {
+    position: fixed;
+    height: 50px;
+    width: 450px;
+    bottom: 20px;
+    display:flex;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ccc;
+}
+#root aside .number {
+    transition: all 200ms ease-in;
+    width: 50px;
+    display:flex;
+    align-items: center;
+    justify-content:center;
+    border-radius:10px; 
+}
+.active {
+    background-color: #ccc;
+}
