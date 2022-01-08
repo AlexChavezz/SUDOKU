@@ -2,15 +2,26 @@ import '../css/app.css';
 import { sudokuLayaut } from './sudokuLayout';
 
 let easyOne = [
-            [1, null, null, 2, null, 7, null, null, 3],
-            [6, null, null, null, null, null, null, 5, null],
-            [null, 4, 7, null, 3, null, null, 2, 8],
-            [8, null, null, null, null, 3, null, null, 5],
-            [null, 6, null, null, null, 1, null, null, 2],
-            [3, null, 9, null, null, 5, 8, 1, 6],
-            [null, 8, null, null, null, 4, null, null, null],
-            [5, 9, null, 6, 7, null, null, null, null],
-            [null, 3, null, 9, 1, null, null, 8, 4],
+    [1, 5, 8, 2, 4, 7, 6, 9, 3],
+    [6, 2, 3, 1, 8, 9, 4, 5, 7],
+    [9, 4, 7, 5, 3, 6, 1, 2, 8],
+    [8, 1, 2, 7, 6, 3, 9, 4, 5],
+    [4, 6, 5, 8, 9, 1, 3, 7, 2],
+    [3, 7, 9, 4, 2, 5, 8, 1, 6],
+    [2, 8, 1, 3, 5, 4, 7, 6, 9],
+    [5, 9, 4, 6, 7, 8, 2, 3, 1],
+    [7, 3, 6, 9, 1, 2, 5, 8, null]
+];
+let resOne = [
+    [1, 5, 8, 2, 4, 7, 6, 9, 3],
+    [6, 2, 3, 1, 8, 9, 4, 5, 7],
+    [9, 4, 7, 5, 3, 6, 1, 2, 8],
+    [8, 1, 2, 7, 6, 3, 9, 4, 5],
+    [4, 6, 5, 8, 9, 1, 3, 7, 2],
+    [3, 7, 9, 4, 2, 5, 8, 1, 6],
+    [2, 8, 1, 3, 5, 4, 7, 6, 9],
+    [5, 9, 4, 6, 7, 8, 2, 3, 1],
+    [7, 3, 6, 9, 1, 2, 5, 8, 4],
 ];
 let mediumOne = [
         [null, 7, null, null, null, null, 6, null, null],
@@ -73,14 +84,50 @@ const generateLayout  = (sudokuValues) => {
     }
 }
 
-// const sudokuValidation = ( sudokuValues ) => {
-//     for (let i = 0; i < sudokuValues.length; i++) {
-//         for (let j = 0; j < sudokuValues.length; j++) {
-//             console.log(sudokuValues[i][j])   
-//         }
-//     }
-// }
+const sudokuValidation = () => {
+    let isValidate = true;
+    let sudokuHtml = getSudokuHtml();
+    let arrayBidimensional = [
+            [null, null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null, null],
+        ]
+   for (let i = 0; i < sudokuHtml.length; i++) {
+        for (let j = 0; j < sudokuHtml.length; j++) {
+            arrayBidimensional[i][j] = parseInt(sudokuHtml[i][j].textContent);
+        }        
+    }
+    for (let i = 0; i < arrayBidimensional.length; i++) {
+        for (let j = 0; j < arrayBidimensional.length; j++) {
+            if( arrayBidimensional[i][j] !== resOne[i][j]){
+                isValidate = false;
+            }
+        }        
+    }
+    return isValidate;
+}
 
+// -> change styles to active styles numbers
+const toggleColorChange = (target) => {
+    const sudokuHtml = getSudokuHtml();
+    for (let i = 0; i < sudokuHtml.length; i++) {
+        for (let j = 0; j < sudokuHtml.length; j++) {
+            if(sudokuHtml[i][j].textContent == target.getAttribute('data-id')){
+                sudokuHtml[i][j].style.backgroundColor = "#181818";
+                sudokuHtml[i][j].style.color = "#fff";
+            }else{
+                sudokuHtml[i][j].style.backgroundColor = "#fff";
+                sudokuHtml[i][j].style.color = "black";
+            }
+        }                        
+    }
+}
 
 const butonsOptions = document.querySelectorAll('.initial_screen_option');
 butonsOptions.forEach(element => {
@@ -96,8 +143,9 @@ butonsOptions.forEach(element => {
         switch (type.toLowerCase()) {
             case "easy": {
                 generateLayout(easyOne);
+                const something = generateClock();
+                console.log(something);
                 const numbers  = document.querySelectorAll('.number');
-               
                 document.querySelector('aside').addEventListener('click', ({target}) => {
                     numbers.forEach( element => {
                         // -> active styles toggle
@@ -107,14 +155,21 @@ butonsOptions.forEach(element => {
                             target.classList.add('active');
                         }
                     })
-                    // sudokuValidation();
-                    const something = getSudokuHtml();
-                    console.log(something)
+                    // -> active numbers styles
+                    toggleColorChange(target);
                     value.current = target.getAttribute('data-id');
                 });
                 document.addEventListener('click', (e) => {
                     if( !e.target.classList.contains('static') && e.target.classList.contains('sudoku_number')){
                         e.target.textContent = value.current;
+                        // -> validar si es correcto el sudoku
+                        const isValidate  = sudokuValidation();
+                        if ( isValidate ){
+                            const time = getTime();
+                            console.log(time);
+                            clearInterval(something);
+                            console.log('logrado')
+                        }
                     }
                 });
             }
@@ -131,6 +186,40 @@ butonsOptions.forEach(element => {
     })
 });
 
+const getTime = () => {
+    const minutes = parseInt(document.querySelector('.minutes').textContent);
+    const secounds = parseInt(document.querySelector('.secounds').textContent);
+
+    console.log(`${minutes}:${secounds}`)
+    // return 10
+}
+
+const generateClock = () => {
+    let secounds = 0;
+    let minutes = 0;
+    let hours = 0;
+    return window.setInterval(() => {
+        // secounds += secounds + 1;
+        if( minutes === 60){
+            minutes =  0;
+            hours++;
+        }
+        if( secounds === 60){
+            secounds = 0;
+            minutes++;
+        }
+        document.querySelector('.hours').innerHTML = `0${hours}:`;
+        document.querySelector('.minutes').innerHTML = `0${minutes}:`;
+        document.querySelector('.secounds').innerHTML = `0${secounds}`;
+        if( secounds >= 10){
+            document.querySelector('.secounds').innerHTML = secounds;
+        }
+        if( minutes >= 10 ){
+            document.querySelector('.minutes').innerHTML = minutes;
+        }
+        secounds++;
+    }, 1000);
+}
 // const generateSudoku = (difficulty) => {
 //     clearRoot();
 //     addSudoku(difficulty);

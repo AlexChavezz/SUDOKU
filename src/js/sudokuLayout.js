@@ -1,5 +1,13 @@
 export const sudokuLayaut = `
 <article class="sudoku">
+    <div class="clock">
+    <p class="hours">
+    </p>
+    <p class="minutes">
+     </p>
+     <p class="secounds">
+     </p>
+    </div>
     <div class="sudoku_container_number onePart">
         <div class="sudoku_number one"></div>
         <div class="sudoku_number one"></div>
