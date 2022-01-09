@@ -130,12 +130,11 @@ const toggleColorChange = (target) => {
 }
 
 const butonsOptions = document.querySelectorAll('.initial_screen_option');
+console.log(butonsOptions)
 butonsOptions.forEach(element => {
     element.addEventListener('click', function ({ target }) {
         const type = target.textContent;
 
-        
-        
         let value = {
             current: 1, 
         }
@@ -165,10 +164,28 @@ butonsOptions.forEach(element => {
                         // -> validar si es correcto el sudoku
                         const isValidate  = sudokuValidation();
                         if ( isValidate ){
+                            const sudokuHtml = getSudokuHtml();
+                                for (let i = 0; i < sudokuHtml.length; i++) {
+                                    for (let j = 0; j < sudokuHtml.length; j++) {
+                                        sudokuHtml[i][j].style.backgroundColor = "#181818";
+                                        sudokuHtml[i][j].style.color = "#fff";
+                                    }                                    
+                                }
                             const time = getTime();
-                            console.log(time);
+                                generateModal(time);
+                                document.querySelector('.push').addEventListener('click', () => {
+                                    fetch('http://localhost:8080/api/data', {
+                                        method:"POST", 
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify(time)
+                                    })
+                                    .then(res => res.json())
+                                    .then(console.log)
+                                })
                             clearInterval(something);
-                            console.log('logrado')
+                            // console.log('logrado')
                         }
                     }
                 });
@@ -186,12 +203,38 @@ butonsOptions.forEach(element => {
     })
 });
 
+const generateModal = ({hours, minutes, secounds}) => {
+    const modal = document.createElement('section');
+    modal.className = "modal_container"
+    const modalChild = `
+    <article class="modal">
+        <article>
+            <h3>Congratulations</h3>
+        </article>
+        <img src="./pictures/undraw_winners_re_wr1l.svg" alt="congrats_img"/>
+        <article>
+            Time: 0${hours} : ${minutes < 10? ('0' + minutes) : (minutes)} : ${secounds < 10? ('0'+secounds) : (secounds)}
+        </article>
+        <button class="push">
+            Push to scoreboard
+        </button>
+        <button onclick="location.reload()">
+        Menu
+    </button>
+    </article>
+    `;
+    modal.innerHTML = modalChild;
+    document.querySelector('#root').appendChild(modal);
+}
+
 const getTime = () => {
+    const hours = parseInt(document.querySelector('.hours').textContent);
     const minutes = parseInt(document.querySelector('.minutes').textContent);
     const secounds = parseInt(document.querySelector('.secounds').textContent);
 
-    console.log(`${minutes}:${secounds}`)
-    // return 10
+    return {
+        hours, minutes, secounds
+    }
 }
 
 const generateClock = () => {
