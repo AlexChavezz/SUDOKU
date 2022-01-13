@@ -342,29 +342,27 @@ const generateClock = () => {
 
 */
 
-document.querySelector('.scores_section').addEventListener('click', (e) => {
+document.querySelector('.scores_section').addEventListener('click', () => {
     const menu = document.querySelector('.menu');
-
     menu.style.display = 'flex';
 
-    document.querySelector('.menu').addEventListener('click', ({target}) => {
-        if( target.classList.contains('menu')){
+    document.querySelector('.menu').addEventListener('click', ({ target }) => {
+        if (target.classList.contains('menu')) {
             document.querySelector('.cancel').animate([
-                {transform: 'scale(1..1)'},
-                {transform: 'scale(.9)'},
-                {transform: 'scale(1.1)'},
-                {transform: 'scale(1)'}
+                { transform: 'scale(1..1)' },
+                { transform: 'scale(.9)' },
+                { transform: 'scale(1.1)' },
+                { transform: 'scale(1)' }
             ], {
                 duration: 200
             })
         }
     })
 
-    document.querySelector('.close-menu').addEventListener('click', ({target}) => {
-        console.log(target)
+    document.querySelector('.cancel').addEventListener('click', () => {
         // -> generate animation fade-out
         menu.animate([
-            { opacity: 1 }, 
+            { opacity: 1 },
             { opacity: 0 },
         ], {
             duration: 200,
@@ -372,11 +370,60 @@ document.querySelector('.scores_section').addEventListener('click', (e) => {
         setTimeout(() => {
             menu.style.display = 'none';
         }, 150);
-});
+    });
 })
 
+/*
 
+    -> SCORE BOARD
 
+*/
+
+document.querySelector('.scores-page').addEventListener('click', () => {
+    const scoresContainer = generateScoreScreen();
+    document.querySelector('.hidde-scores').addEventListener('click', () => animationScoresContainer(scoresContainer));
+});
+
+const generateScoreScreen = () => {
+    const scoresContainer = document.createElement('article');
+    scoresContainer.className = "scores-container-pages";
+    const scores = document.createElement('article');
+    scores.className = "scores-pages";
+    scores.innerHTML = `
+    <img src="./close_white_24dp.svg" alt="close-img" class="hidde-scores" />
+    <article class="select">
+    <div>Easy</div>
+    <div>Medium</div>
+    <div>Hard</div>
+    </article>
+    <article class="content">
+        <div>
+            <img src="./emoji_events_white_24dp.svg" alt="" class="one" />
+        </div>
+        <div>
+            <img src="./emoji_events_white_24dp.svg" alt="" class="two" />
+        </div>
+        <div>
+            <img src="./emoji_events_white_24dp.svg" alt="" class="three" />
+        </div>
+    </article>
+    `;
+    scoresContainer.appendChild(scores);
+    document.querySelector('#root').appendChild(scoresContainer);
+    return scoresContainer;
+}
+
+const animationScoresContainer = (scoresContainer) => {
+    scoresContainer.animate([
+        { transform: 'scale(1)' },
+        { transform: 'scale(0)' },
+    ], {
+        duration: 300
+    });
+    setTimeout(() => {
+        scoresContainer.remove();
+    }, 290);
+}
 
 
 

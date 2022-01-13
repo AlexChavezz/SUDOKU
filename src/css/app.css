@@ -100,13 +100,15 @@
 
 .clock {
     position: absolute;
-    /* top:10px; */
     display: flex;
-    left: 10px;
     padding: 10px;
     font-size: 20px;
     letter-spacing: 1px;
+    right: 0;
+    left: 0;
     margin: auto;
+    bottom: 100px;
+    width: 120px;
 }
 
 .modal_container {
@@ -308,5 +310,66 @@
 
     to {
         opacity: 1;
+    }
+}
+.scores-container-pages {
+    animation: scores-page 300ms linear;
+    border-radius: 10px;
+    background-color:#fff;
+    position: absolute;
+    width: 90vw;
+    height: 95vh;
+    /* z-index: 2; */
+}
+.scores-pages {
+    width: 100%;
+    height: 100% !important;
+    position: relative;
+    display: flex !important;
+    flex-direction:column;
+    justify-content: space-evenly;
+}
+.scores-pages .select {
+    width: 50%;
+    grid-template-columns:repeat(3, 1fr) ;
+    text-align: center;
+    height:100px !important;
+    margin-top: 0px;
+}
+.scores-pages .select > div {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+.scores-pages .content {
+    margin-top:0px;
+    height: 500px;
+    width: 80%;
+}
+.scores-pages .content img {
+    width: 100px;
+    border-radius:10px;
+}
+.scores-pages .content .one {
+    background-color: gold;
+}
+.scores-pages .content .two {
+    background-color: silver;
+} 
+.scores-pages .content .three {
+    background-color: burlywood;
+}
+.scores-pages  .hidde-scores {
+    position: absolute;
+    top:0px;
+    right: 0px;
+    background: #dc3545;
+    padding: 5px 15px;
+    border-bottom-left-radius: 5px;
+}
+@keyframes scores-page {
+    from {
+        transform: scale(0);
+    }to{
+        transform: scale(1);
     }
 }
