@@ -11,9 +11,9 @@ function createWindow(){
         minWidth:1300,
         minHeight: 670,
         autoHideMenuBar: true,
-        webPreferences: {
-            devTools: false,
-        }
+        // webPreferences: {
+        //     devTools: false,
+        // }
     });
     // -> close app
     appWindow.on ('closed', () => {
@@ -21,7 +21,7 @@ function createWindow(){
     })
     // -> load html
     
-    appWindow.loadFile('./dist/index.html')
+    appWindow.loadFile('./public/index.html')
     // click()
     appWindow.once('ready-to-show', () => {
         appWindow.show();
