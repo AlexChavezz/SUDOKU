@@ -133,7 +133,7 @@ const toggleColorChange = (target) => {
 const butonsOptions = document.querySelectorAll('.initial_screen_option');
 console.log(butonsOptions)
 butonsOptions.forEach(element => {
-    element.addEventListener('click', function({
+    element.addEventListener('click', function ({
         target
     }) {
         const type = target.textContent;
@@ -144,15 +144,15 @@ butonsOptions.forEach(element => {
             case "easy": {
                 mainProcess('easy');
             }
-            break;
-        case "medium":
-            mainProcess('medium');
-            break;
-        case "hard":
-            mainProcess('hard');
-            break;
-        default:
-            break;
+                break;
+            case "medium":
+                mainProcess('medium');
+                break;
+            case "hard":
+                mainProcess('hard');
+                break;
+            default:
+                break;
         }
     })
 });
@@ -229,7 +229,7 @@ const modalContentPushToMarkets = (time) => `
     </article>
     <article>
         <p>SCORE</p>
-        <p>${parseInt(time.hours) >= 10 ? time.hours:'0'+time.hours} : ${parseInt(time.minutes) >= 10? time.minutes: '0'+time.minutes} : ${parseInt(time.secounds) >= 10? time.secounds: '0'+time.secounds}</p>
+        <p>${parseInt(time.hours) >= 10 ? time.hours : '0' + time.hours} : ${parseInt(time.minutes) >= 10 ? time.minutes : '0' + time.minutes} : ${parseInt(time.secounds) >= 10 ? time.secounds : '0' + time.secounds}</p>
     </article>                                        
     <article>
     <form>
@@ -249,12 +249,12 @@ const pushToMarkets = (time, userName, dificulty) => {
     }
     return new Promise((resolve, reject) => {
         fetch('http://localhost:8080/api/data', {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(mark)
-            })
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(mark)
+        })
             .then(res => res.json())
             .then(res => resolve(res))
             .catch(error => reject(error))
@@ -276,7 +276,7 @@ const generateModal = ({
         </article>
         <img src="./undraw_winners_re_wr1l.svg" alt="congrats_img"/>
         <article>
-            Time: 0${hours} : ${minutes < 10? ('0' + minutes) : (minutes)} : ${secounds < 10? ('0'+secounds) : (secounds)}
+            Time: 0${hours} : ${minutes < 10 ? ('0' + minutes) : (minutes)} : ${secounds < 10 ? ('0' + secounds) : (secounds)}
         </article>
         <button class="push">
             Push to scoreboard
@@ -328,6 +328,60 @@ const generateClock = () => {
         secounds++;
     }, 1000);
 }
+
+
+
+
+
+
+
+
+/*
+
+    Menu
+
+*/
+
+document.querySelector('.scores_section').addEventListener('click', (e) => {
+    const menu = document.querySelector('.menu');
+
+    menu.style.display = 'flex';
+
+    document.querySelector('.menu').addEventListener('click', ({target}) => {
+        if( target.classList.contains('menu')){
+            document.querySelector('.cancel').animate([
+                {transform: 'scale(1..1)'},
+                {transform: 'scale(.9)'},
+                {transform: 'scale(1.1)'},
+                {transform: 'scale(1)'}
+            ], {
+                duration: 200
+            })
+        }
+    })
+
+    document.querySelector('.close-menu').addEventListener('click', ({target}) => {
+        console.log(target)
+        // -> generate animation fade-out
+        menu.animate([
+            { opacity: 1 }, 
+            { opacity: 0 },
+        ], {
+            duration: 200,
+        });
+        setTimeout(() => {
+            menu.style.display = 'none';
+        }, 150);
+});
+})
+
+
+
+
+
+
+
+
 // const generateSudoku = (difficulty) => {
 //     clearRoot();
 //     addSudoku(difficulty);
@@ -342,7 +396,7 @@ const generateClock = () => {
 
 // const generateSudoku = () => {
 
-//     // -> Note for me: Try fill  all array position whit numbers 
+//     // -> Note for me: Try fill  all array position whit numbers
 
 //     let arrayBidimensional = [
 //         [null, null, null, null, null, null, null, null, null],
@@ -454,7 +508,7 @@ const generateClock = () => {
 //     }
 
 
-// -> i will Opitimize it i promes    
+// -> i will Opitimize it i promes
 // let index1 = [];
 // for (let i = 0; i < 9; i++) {
 //     if (index1.some(number => number === aux[i] && number !== null)) {
